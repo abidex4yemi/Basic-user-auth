@@ -1,0 +1,19 @@
+{
+  "name": "basic-user-auth",
+  "version": "1.0.0",
+  "description": "basic-user-auth-app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/abidex4yemi/Basic-user-auth.git"
+  },
+  "author": "Sulaiman Abidemi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/abidex4yemi/Basic-user-auth/issues"
+  },
+  "homepage": "https://github.com/abidex4yemi/Basic-user-auth#readme"
+}
