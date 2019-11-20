@@ -1,10 +1,6 @@
 const jwt = require('jsonwebtoken');
 const { User } = require('../../db/models');
-const {
-  createError,
-  UNAUTHORIZED,
-  GENERIC_ERROR,
-} = require('../util/error.js');
+const { createError, UNAUTHORIZED, GENERIC_ERROR } = require('../util/error');
 
 /**
  * Verifies user provided token
@@ -23,7 +19,7 @@ const verifyToken = async (req, res, next) => {
     return next(
       createError({
         status: UNAUTHORIZED,
-        message: 'Unauthorized!, you have to login',
+        message: 'Unauthorized!, please login',
       }),
     );
   }
@@ -32,7 +28,7 @@ const verifyToken = async (req, res, next) => {
     // verify user provided token against existing token
     const decoded = jwt.verify(token, secretKey);
 
-    const user = await User.getById(decoded.id);
+    const user = await User.findByPk(decoded.id);
 
     // check for valid app users
     if (!user) {
@@ -45,7 +41,7 @@ const verifyToken = async (req, res, next) => {
     }
 
     // makes user object available through request object
-    req.user = decoded;
+    req.user = user;
 
     return next();
   } catch (errors) {
