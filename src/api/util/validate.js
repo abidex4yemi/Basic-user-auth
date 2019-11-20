@@ -26,7 +26,7 @@ const joiValidate = (req, res, next, schema) => {
   }
 
   // Note: create a new key `sanitizedBody` to the body with sanitized value
-  req.body.sanitizedBody = value;
+  req.body = value;
 
   return next();
 };

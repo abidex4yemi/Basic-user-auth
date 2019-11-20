@@ -1,13 +1,9 @@
 const uuid = require('uuid');
+const bcrypt = require('bcryptjs');
 const { User } = require('../../../db/models');
 const { sendMail, mailContent } = require('../../util/email');
 const { handleSuccessResponse, CREATED } = require('../../util/success');
-const {
-  createError,
-  CONFLICT,
-  GENERIC_ERROR,
-  BAD_REQUEST,
-} = require('../../util/error');
+const { createError, CONFLICT, GENERIC_ERROR } = require('../../util/error');
 
 /**
  * Create new user
@@ -20,21 +16,28 @@ const createUser = async (req, res, next) => {
   try {
     const verificationToken = uuid();
 
-    const user = await User.create({ ...req.body, verificationToken });
+    // Hash password
+    req.body.password = bcrypt.hashSync(
+      req.body.password,
+      bcrypt.genSaltSync(10),
+    );
 
-    // handle user creation error
-    if (!user) {
-      return next(
-        createError({
-          message: 'Something went wrong, try again',
-          status: BAD_REQUEST,
-        }),
-      );
-    }
+    // normalized as default user
+    req.body.role = 'normal_user';
+
+    const user = await User.create({
+      ...req.body,
+      verificationToken,
+    });
 
     const { id, firstName, lastName, email } = user;
 
-    const messageBody = mailContent(id, firstName, lastName, verificationToken);
+    const messageBody = mailContent({
+      id,
+      firstName,
+      lastName,
+      verificationToken,
+    });
 
     const subject = 'Welcome to idea labs';
 

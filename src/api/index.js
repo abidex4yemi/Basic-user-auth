@@ -8,7 +8,7 @@ const helmet = require('helmet');
 const cors = require('cors');
 
 const { NOT_FOUND } = require('./util/error');
-const { allErrorHandler } = require('./middleware/errorHandler');
+const allErrorHandler = require('./middleware/errorHandler');
 const { handleSuccessResponse, OK } = require('./util/success');
 const userRouter = require('./routes/userRouter');
 

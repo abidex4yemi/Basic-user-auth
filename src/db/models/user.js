@@ -3,7 +3,7 @@
  * @param {DataTypes} DataTypes
  * @returns {Model} Returns User model
  */
-export default (sequelize, DataTypes) => {
+module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define(
     'User',
     {
@@ -42,15 +42,15 @@ export default (sequelize, DataTypes) => {
       verificationToken: {
         type: DataTypes.STRING,
       },
+      role: {
+        type: DataTypes.ENUM('admin', 'normal_user'),
+        defaultValue: 'normal_user',
+      },
       passwordResetToken: {
         type: DataTypes.STRING,
       },
       resetTokenExpires: {
         type: DataTypes.DATE,
-      },
-      role: {
-        type: DataTypes.ENUM('admin', 'normal_user'),
-        defaultValue: 'normal_user',
       },
     },
     {
