@@ -5,6 +5,7 @@ const {
   GENERIC_ERROR,
   NOT_FOUND,
   FORBIDDEN,
+  UNAUTHORIZED,
 } = require('../../util/error');
 
 /**
@@ -16,6 +17,20 @@ const {
  */
 const getSingleUserPermission = async (req, res, next) => {
   try {
+    if (!req.user) {
+      return next({
+        status: UNAUTHORIZED,
+        message: 'You must be login to access this endpoint',
+      });
+    }
+
+    if (req.user.role !== 'admin') {
+      return next({
+        status: FORBIDDEN,
+        message: 'You do not have access to this endpoint',
+      });
+    }
+
     const { username } = req.params;
 
     const user = await User.findOne({ where: { username } });
