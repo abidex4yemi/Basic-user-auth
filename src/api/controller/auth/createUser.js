@@ -49,7 +49,7 @@ const createUser = async (req, res, next) => {
       handleSuccessResponse({
         message:
           'Account created successfully, please check your email for account verification',
-        body: [],
+        data: [],
       }),
     );
   } catch (error) {

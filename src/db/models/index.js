@@ -27,6 +27,7 @@ fs.readdirSync(__dirname)
     );
   })
   .forEach((file) => {
+    // eslint-disable-next-line dot-notation
     const model = sequelize['import'](path.join(__dirname, file));
     db[model.name] = model;
   });
