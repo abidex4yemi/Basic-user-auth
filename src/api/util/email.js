@@ -7,15 +7,22 @@ const transporter = nodeMailer.createTransport(
   }),
 );
 
-const sendMail = ({ email, subject, message }) => {
+const sendMail = ({ email, subject, messageBody }) => {
   const mailOptions = {
     from: 'no-reply@idea-lab-p.com',
     to: email,
     subject,
-    html: message,
+    html: messageBody,
   };
 
   return transporter.sendMail(mailOptions);
 };
 
-module.exports = sendMail;
+const mailContent = (firstName, lastName, id, verificationToken) => `
+        <div>
+          <h3>Dear ${firstName} ${lastName}</h3>
+          <p>Welcome to idea lab!, Your account was successfully created.</p>
+          <p>Kindly click this ${process.env.FRONTEND_URL}/confirm/${id}/${verificationToken} to confirm your account.</p>
+        </div>`;
+
+module.exports = { sendMail, mailContent };
