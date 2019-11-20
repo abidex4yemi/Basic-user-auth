@@ -21,16 +21,18 @@
     "@hapi/joi": "^16.1.7",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
     "eslint-config-prettier": "^6.7.0",
     "eslint-plugin-prettier": "^3.1.1",
     "express": "^4.17.1",
     "helmet": "^3.21.2",
     "jsonwebtoken": "^8.5.1",
     "morgan": "^1.9.1",
+    "nodemailer": "^6.3.1",
+    "nodemailer-sendgrid": "^1.0.3",
     "pg": "^7.13.0",
     "pg-hstore": "^2.3.3",
-    "sequelize": "^5.21.2",
-    "dotenv": "^8.2.0"
+    "sequelize": "^5.21.2"
   },
   "devDependencies": {
     "chai": "^4.2.0",
