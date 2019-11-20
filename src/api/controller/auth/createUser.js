@@ -14,6 +14,8 @@ const { createError, CONFLICT, GENERIC_ERROR } = require('../../util/error');
  */
 const createUser = async (req, res, next) => {
   try {
+    // Todo: user account verification token should expired within a time frame
+
     const verificationToken = uuid();
 
     // Hash password

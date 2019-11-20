@@ -7,6 +7,7 @@ const {
   NOT_FOUND,
   GENERIC_ERROR,
   BAD_REQUEST,
+  FORBIDDEN,
 } = require('../../util/error');
 
 /**
@@ -24,11 +25,23 @@ const login = async (req, res, next) => {
       where: { username: credential.username },
     });
 
+    // check if user does not exist
     if (!user) {
       return next(
         createError({
           message: 'User does not exist',
           status: NOT_FOUND,
+        }),
+      );
+    }
+
+    // check if user account not verified
+    if (!user.verified) {
+      return next(
+        createError({
+          message:
+            'Please verify your account, using the link sent to your email',
+          status: FORBIDDEN,
         }),
       );
     }

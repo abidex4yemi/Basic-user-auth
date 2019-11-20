@@ -34,7 +34,7 @@ const verifyUser = async (req, res, next) => {
 
     return res.status(CREATED).json(
       handleSuccessResponse({
-        message: 'Account successfully verified',
+        message: 'Account verified successfully',
         data: [],
       }),
     );
