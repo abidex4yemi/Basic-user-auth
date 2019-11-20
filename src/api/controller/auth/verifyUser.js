@@ -3,8 +3,8 @@ const { handleSuccessResponse, CREATED } = require('../../util/success');
 const {
   createError,
   GENERIC_ERROR,
-  FORBIDDEN,
   BAD_REQUEST,
+  NOT_FOUND,
 } = require('../../util/error');
 
 /**
@@ -22,8 +22,8 @@ const verifyUser = async (req, res, next) => {
 
     if (!user) {
       return next({
-        status: FORBIDDEN,
-        message: 'Verification token not valid',
+        status: NOT_FOUND,
+        message: 'User does not exist',
       });
     }
 
