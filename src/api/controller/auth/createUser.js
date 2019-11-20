@@ -16,7 +16,7 @@ const {
  * @param {*} res
  * @param {*} next
  */
-const signUp = async (req, res, next) => {
+const createUser = async (req, res, next) => {
   try {
     const verificationToken = uuid();
 
@@ -79,4 +79,4 @@ const signUp = async (req, res, next) => {
   }
 };
 
-module.exports = signUp;
+module.exports = createUser;

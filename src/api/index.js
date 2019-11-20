@@ -10,6 +10,7 @@ const cors = require('cors');
 const { NOT_FOUND } = require('./util/error');
 const { allErrorHandler } = require('./middleware/errorHandler');
 const { handleSuccessResponse, OK } = require('./util/success');
+const userRouter = require('./routes/userRouter');
 
 const app = express();
 
@@ -31,6 +32,8 @@ app.get('/', (req, res) =>
     }),
   ),
 );
+
+app.use('/api/v1/user/auth', userRouter);
 
 // Handle invalid request
 app.all('*', (req, res) =>
