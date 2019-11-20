@@ -1,6 +1,11 @@
 const { User } = require('../../../db/models');
 const { handleSuccessResponse, OK } = require('../../util/success');
-const { createError, GENERIC_ERROR, NOT_FOUND } = require('../../util/error');
+const {
+  createError,
+  GENERIC_ERROR,
+  NOT_FOUND,
+  FORBIDDEN,
+} = require('../../util/error');
 
 /**
  * Get user permission given a username
@@ -11,7 +16,7 @@ const { createError, GENERIC_ERROR, NOT_FOUND } = require('../../util/error');
  */
 const getSingleUserPermission = async (req, res, next) => {
   try {
-    const { username } = req;
+    const { username } = req.params;
 
     const user = await User.findOne({ where: { username } });
 
@@ -20,6 +25,17 @@ const getSingleUserPermission = async (req, res, next) => {
         status: NOT_FOUND,
         message: 'User does not exist',
       });
+    }
+
+    // check if user account not verified
+    if (!user.verified) {
+      return next(
+        createError({
+          message:
+            'Please verify your account, using the link sent to your email',
+          status: FORBIDDEN,
+        }),
+      );
     }
 
     return res.status(OK).json(
