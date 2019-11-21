@@ -1,10 +1,25 @@
 language: node_js
+
 node_js:
   - 'stable'
-install: npm install
+
 services:
   - postgresql
+addons:
+  postgresql: '9.6'
+
 before_script:
-  - psql -c 'create database test_db;' -U postgres
-script: npm test
-after_success: npm run coverage
+  - psql -c 'create database idea-test;' -U postgres
+
+env:
+  - NODE_ENV=test
+
+cache:
+  directories:
+    - node_modules
+
+script:
+  - npm test
+
+after_success:
+  - npm run coverage
