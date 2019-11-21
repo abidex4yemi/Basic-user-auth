@@ -9,7 +9,7 @@ const transporter = nodeMailer.createTransport(
 
 const sendMail = ({ email, subject, messageBody }) => {
   const mailOptions = {
-    from: 'no-reply@idea-lab-p.com',
+    from: 'no-reply@idea-lab.com',
     to: email,
     subject,
     html: messageBody,
