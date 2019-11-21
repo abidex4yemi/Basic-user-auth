@@ -18,6 +18,5 @@ describe('Invalid Route Request [GET / POST] Test suite', () => {
 
   it('Should have response body', () => {
     expect(response.body.message).toBe('Route does not exist...');
-    expect(response.body.body).toHaveLength(0);
   });
 });

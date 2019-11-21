@@ -2,13 +2,12 @@
 const superTest = require('supertest');
 const app = require('../../api/index');
 const { normalUser } = require('../mock/user');
-const models = require('../../db/models');
 
 const request = superTest(app);
 
-models.sequelize.sync({});
+let token;
 
-describe('[POST] [/api/v1/auth/register] Register Test suite [SUCCESS]', () => {
+describe('[POST] should register user Test suite [SUCCESS]', () => {
   let response = {};
 
   beforeAll(async () => {
@@ -38,18 +37,35 @@ describe('[POST] [/api/v1/auth/register] Register Test suite [SUCCESS]', () => {
   });
 });
 
-// [/api/1v/user/auth/signup][FAILURE];
+// [/api/1v/user/auth/signup] [FAILURE]
 describe('[POST] [/api/1v/user/auth/signup] Register Test suite [FAILURE]', () => {
   it('Should respond with status code of 400 on empty request body', async () => {
-    const response = await request.post('/api/1v/user/auth/signup').send({});
+    const response = await request.post('/api/v1/user/auth/signup').send({});
     expect(response.status).toEqual(400);
   });
 
   it('Should respond with status code of 409 if user already exist', async () => {
     const response = await request
-      .post('/api/1v/user/auth/signup')
+      .post('/api/v1/user/auth/signup')
       .send(normalUser);
     expect(response.status).toEqual(409);
+  });
+});
+
+// user verification
+describe('User account Verification', () => {
+  let response = {};
+  const userId = 'eac8cd5b-5767-4cc4-bfca-f58408957b5f';
+  const verificationToken = 'e202e7a3-14b1-43a2-9882-3b760b42b4dc';
+
+  beforeAll(async () => {
+    response = await request.post(
+      `/api/v1/user/auth/confirm/${userId}/${verificationToken}`,
+    );
+  });
+
+  it('Should verify account given id is valid', () => {
+    expect(response.status).toEqual(200);
   });
 });
 
@@ -59,9 +75,11 @@ describe('[POST] [/api/v1/user/auth/login] Login Test suite [SUCCESS]', () => {
 
   beforeAll(async () => {
     response = await request.post('/api/v1/user/auth/login').send({
-      username: normalUser.username,
-      password: normalUser.password,
+      username: 'jane32',
+      password: '123456',
     });
+
+    token = response.body.body.token;
   });
 
   it('Should return response body as JSON', () => {
@@ -74,7 +92,6 @@ describe('[POST] [/api/v1/user/auth/login] Login Test suite [SUCCESS]', () => {
 
   it('Should have response body of user object', () => {
     expect(response.body.message).toBe('Log in successful');
-    expect(response.body.body).toHaveProperty('user');
   });
 
   it('Should have response body with success true', () => {
@@ -108,12 +125,23 @@ describe('[POST] [/api/v1/user/auth/login] Register Test suite [FAILURE]', () =>
     });
     expect(response.body.message).toEqual('User does not exist');
   });
+});
 
-  it('Should respond with status code 400', async () => {
-    const response = await request.post('/api/v1/user/auth/login').send({
-      password: '12345688',
-      username: 'june40',
-    });
-    expect(response.status).toEqual(400);
+// User permission
+describe('[GET] Permissions Test suite [SUCCESS]', () => {
+  let response = {};
+
+  beforeAll(async () => {
+    response = await request
+      .get('/api/v1/user/auth/permissions/jane32')
+      .set('Authorization', token);
+  });
+
+  it('Should return response body as JSON', () => {
+    expect(response.type).toBe('application/json');
+  });
+
+  it('Should respond with status code of 200', () => {
+    expect(response.status).toEqual(200);
   });
 });

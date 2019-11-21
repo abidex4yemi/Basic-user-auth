@@ -6,8 +6,14 @@ module.exports = {
     dialect: 'postgres',
   },
   test: {
-    url: process.env.TEST_DATABASE_URL,
+    password: process.env.TEST_DB_PASSWORD,
+    database: process.env.TEST_DB,
+    host: process.env.TEST_DB_HOST,
+    port: process.env.TEST_DB_HOST,
+    username: process.env.TEST_DB_USERNAME,
+    url: process.env.TEST_DB_TRAVIS,
     dialect: 'postgres',
+    logging: false,
   },
   production: {
     url: process.env.DATABASE_URL_1,
