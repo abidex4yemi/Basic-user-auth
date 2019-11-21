@@ -4,22 +4,25 @@
   "description": "basic-user-auth-app",
   "main": "start.js",
   "scripts": {
-    "db:create": "npx sequelize db:create",
-    "db:migrate": "npx sequelize db:migrate",
-    "db:seed": "npx sequelize db:seed:all",
+    "db-create": "sequelize db:create",
     "db-create:test": "NODE_ENV=test sequelize db:create",
-    "db-migrate:test": "cross-env NODE_ENV=test npx sequelize db:migrate",
     "db-drop": "sequelize db:drop",
     "db-drop:test": "NODE_ENV=test sequelize db:drop",
-    "db-migrate:undo": "npx sequelize db:migrate:undo:all",
-    "db-migrate:undo:test": "NODE_ENV=test npx db:migrate:undo:all",
+    "db-migrate": "./node_modules/.bin/sequelize db:migrate",
+    "db-migrate:test": "NODE_ENV=test ./node_modules/.bin/sequelize db:migrate",
+    "db-migrate:undo": "./node_modules/.bin/sequelize db:migrate:undo:all",
+    "db-migrate:undo:test": "NODE_ENV=test ./node_modules/.bin/sequelize db:migrate:undo:all",
+    "db-refresh": "npm run db-migrate:undo && npm run db-migrate && npm run db-seed",
+    "db-refresh:test": "NODE_ENV=test npm run db-migrate:undo:test && npm run db-migrate:test && npm run db-seed:test",
+    "db-seed": "./node_modules/.bin/sequelize db:seed:all",
+    "db-seed:test": "NODE_ENV=test ./node_modules/.bin/sequelize db:seed:all",
     "start": "npm run prod",
     "server": "node ./src/api/start.js",
     "server:prod": "node ./src/api/start.js",
     "dev": "cross-env NODE_ENV=development npm-run-all server",
     "prod": "NODE_ENV=production npm-run-all server:prod",
     "watch": "nodemon",
-    "test": "cross-env NODE_ENV=test jest  --watchAll --verbose --testTimeout=10000",
+    "test": "NODE_ENV=test npm run db-refresh:test && jest --watchAll --verbose --testTimeout=20000",
     "lint-fix": "eslint ./src --fix"
   },
   "repository": {
@@ -49,8 +52,8 @@
     "pg": "^7.13.0",
     "pg-hstore": "^2.3.3",
     "sequelize": "^5.21.2",
-    "uuid": "^3.3.3",
-    "supertest": "^4.0.2"
+    "supertest": "^4.0.2",
+    "uuid": "^3.3.3"
   },
   "devDependencies": {
     "cross-env": "^5.2.0",
