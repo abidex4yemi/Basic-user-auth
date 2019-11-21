@@ -19,7 +19,7 @@
     "dev": "cross-env NODE_ENV=development npm-run-all server",
     "prod": "NODE_ENV=production npm-run-all server:prod",
     "watch": "nodemon",
-    "test": "npm run NODE_ENV=test DB_ENV=test jest --watchAll --verbose",
+    "test": "cross-env NODE_ENV=test jest  --watchAll --verbose --testTimeout=10000",
     "lint-fix": "eslint ./src --fix"
   },
   "repository": {
