@@ -1,5 +1,5 @@
 const { User } = require('../../../db/models');
-const { handleSuccessResponse, CREATED } = require('../../util/success');
+const { handleSuccessResponse, OK } = require('../../util/success');
 const {
   createError,
   GENERIC_ERROR,
@@ -32,7 +32,7 @@ const verifyUser = async (req, res, next) => {
       verificationToken: null,
     });
 
-    return res.status(CREATED).json(
+    return res.status(OK).json(
       handleSuccessResponse({
         message: 'Account verified successfully',
         data: [],

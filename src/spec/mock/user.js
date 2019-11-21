@@ -1,19 +1,13 @@
-const normalUser = {
-  firstName: 'Jane',
-  lastName: 'Doe',
-  email: 'jane@gmail.com',
-  username: 'jane40',
-  password: 'jane2$*($)',
-};
+const faker = require('faker');
 
-const errorUser = {
-  firstName: 'Jane',
-  email: 'jjane@gmail.com',
-  username: 'jane40',
-  password: 'jane2$*($)',
+const normalUser = {
+  firstName: faker.name.firstName(),
+  lastName: faker.name.lastName(),
+  email: faker.internet.email(),
+  username: faker.internet.userName(),
+  password: '123456',
 };
 
 module.exports = {
   normalUser,
-  errorUser,
 };
