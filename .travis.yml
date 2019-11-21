@@ -12,10 +12,6 @@ addons:
 env:
   - NODE_ENV=test
 
-cache:
-  directories:
-    - node_modules
-
 script:
   - npm test
 
