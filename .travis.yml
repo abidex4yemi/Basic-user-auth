@@ -9,9 +9,6 @@ services:
 addons:
   postgresql: '9.6'
 
-before_script:
-  - psql -c 'create database idea_test;' -U postgres
-
 env:
   - NODE_ENV=test
 
