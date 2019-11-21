@@ -5,11 +5,12 @@ node_js:
 
 services:
   - postgresql
+
 addons:
   postgresql: '9.6'
 
 before_script:
-  - psql -c 'create database idea-test;' -U postgres
+  - psql -c 'create database idea_test;' -U postgres
 
 env:
   - NODE_ENV=test
