@@ -43,6 +43,41 @@ Example response body:
 
 `POST /api/users/auth/signup`
 
+Endpoint request body
+
+```source-json
+{
+	"firstName": "",
+	"lastName": "",
+	"password": "",
+	"email": "",
+	"username": ""
+}
+```
+
+Endpoint JSON response
+
+
+## Endpoints
+
+### Authentication
+
+`POST /api/users/auth/login`
+
+Example response body:
+
+```source-json
+{
+    "success": true,
+    "message": "Log in successful",
+    "body": {
+        "firstName": "fake",
+        "role": "their role",
+        "token": "jwt.token"
+    }
+}
+```
+
 Example response body:
 
 ```source-json
